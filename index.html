@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="https://d2y5h3osumboay.cloudfront.net/ianftkdgmk0acdri7xnix3sh9uqj" type="image/x-icon">
+
+    <!-- Link del FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        <div class="top">
+            <div class="logo">
+                <img src="https://d2y5h3osumboay.cloudfront.net/ianftkdgmk0acdri7xnix3sh9uqj" alt="">
+            </div>
+            <input id="busqueda" class="busqueda" type="search" placeholder="Buscar">
+            <div class="fav">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+        </div>
+        <div class="right">
+
+            <aside>
+                <div class="filtros">
+                    <div class="operacion filtro">
+                        <h2>Categorias</h2>
+                        <select id="generos">
+                            <option value="Todas" selected>Todas</option>
+                            <!-- <li>
+                                <input type="radio" name="categoira" id="">Todo
+                            </li> -->
+                        </select>
+                    </div>
+                    <div class="operacion">
+                        <a href="" type="button" class="clicked">Movies <i class="fa-solid fa-film"></i></a>
+                        <a href="" type="button" class="">Downloads <i class="fa-solid fa-download"></i></a>
+                        <a href="" type="button" class="">Favorites <i class="fa-solid fa-heart"></i></a>
+                        <a href="" type="button" class="">Watch later <i class="fa-solid fa-tv"></i></a>
+                    </div>
+                    <div class="operacion cerrarSesion">
+                        <button  type="button">Cerrar sesion</button>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </aside>
+
+            <section class="pelis">
+                <div id="portada" class="portada">
+
+                    <div class="titulo">
+                        <h1 id="titulo_portada">
+                            GoodFellas
+                        </h1>
+                        <div class="descripcion">
+                            <p id="descripcion">
+
+                            </p>
+
+                        </div>
+                        <button>Ver trailer <i class="fa-solid fa-clapperboard"></i></button>
+                    </div>
+
+                </div>
+                <div id="tarjetas" class="tarjetas">
+
+                </div>
+
+            </section>
+        </div>
+
+    </main>
+    <script src="./javaScrpt/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+* {
+    padding: 0;
+    margin: 0;
+    color: whitesmoke;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+body {
+    background: url("https://m.media-amazon.com/images/M/MV5BN2E5NzI2ZGMtY2VjNi00YTRjLWI1MDUtZGY5OWU1MWJjZjRjXkEyXkFqcGc@._V1_.jpg");
+    background-position: top;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+main {
+    height: 90%;
+    width: 90%;
+    background-color: rgba(0, 0, 0, 0.207);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+        width: 5rem;
+        height: 3rem;
+
+        img {
+            border-radius: 2px;
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    input {
+        height: 1rem;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 5px;
+        border: 0;
+        outline: none;
+        color: black;
+    }
+
+}
+
+.right {
+    display: flex;
+    gap: 2rem;
+    height: 90%;
+}
+
+aside {
+    max-height: 100%;
+    width: 12%;
+    padding: 1rem;
+
+    .filtros {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        height: 100%;
+        justify-content: center;
+
+        .operacion {
+            border-radius: 30px;
+            padding: 1rem;
+            background-color: rgba(42, 42, 42, 0.611);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: scroll;
+            height: 50%;
+            width: 100%;
+            justify-content: center;
+
+            a,
+            button {
+                background-color: transparent;
+                border: none;
+                outline: none;
+                padding: .5rem;
+                border-radius: 15px;
+                display: flex;
+                justify-content: center;
+                gap: .3rem;
+
+
+                &:hover {
+                    background-color: rgba(69, 69, 69, 0.611);
+
+                }
+                
+            }
+            .clicked {
+                background-color: rgba(69, 69, 69, 0.892);
+            }
+        }
+
+        .filtro {
+            height: auto;
+        }
+
+        .cerrarSesion {
+            height: auto;
+
+        }
+
+        select {
+            height: 2rem;
+            color: black;
+            border-radius: 10px;
+            padding: .5rem;
+            background-color: rgba(251, 251, 251, 0.884);
+            backdrop-filter: blur(4px);
+            border: none;
+            outline: none;
+
+            option {
+                background-color: rgba(53, 53, 53, 0.368);
+                padding: .3rem;
+                border-radius: 5px;
+                color: black;
+            }
+
+
+
+        }
+    }
+}
+
+.pelis {
+    max-height: 95%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(42, 42, 42, 0.611);
+    overflow-y: scroll;
+    border-radius: 30px;
+    padding: 2rem;
+    gap: 2rem;
+
+    .portada {
+        width: 100%;
+        height: 100%;
+        background-image: url("https://m.media-amazon.com/images/M/MV5BN2E5NzI2ZGMtY2VjNi00YTRjLWI1MDUtZGY5OWU1MWJjZjRjXkEyXkFqcGc@._V1_.jpg");
+        background-size: cover;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        border-radius: 15px;
+        
+        .titulo {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+            font-size: xx-large;
+            /* width: 100%; */
+
+            .descripcion {
+                width: 50%;
+
+                p {
+                    font-size: 15px;
+                }
+
+            }
+
+            button {
+                width: 8rem;
+                height: 2rem;
+                background-color: goldenrod;
+                border: none;
+                outline: none;
+                color: whitesmoke;
+                font-size: large;
+                border-radius: 5px;
+                color: black;
+                cursor: pointer;
+                padding: .5rem;
+
+                i {
+                    color: black;
+                }
+            }
+        }
+
+
+    }
+
+    .tarjetas {
+        height: 0%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+
+        .tarjeta {
+            background-color: rgba(53, 53, 53, 0.368);
+            width: 13rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            cursor: pointer;
+
+            .imagen {
+                height: 15rem;
+                width: 100%;
+                border-radius: 5px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            &:hover {
+                background-color: rgba(53, 53, 53, 0.582);
+                box-shadow: -2px 2px 5px black;
+                transition: .2s;
+            }
+            .info{
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                align-items: start;
+                height: 100%;
+                gap: .5rem;
+            }
+
+            .genPlay {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+            }
+            button{
+                background-color: transparent;
+                border: none;
+                outline: none;
+                padding: .5rem;
+                border-radius: 50rem;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(69, 69, 69, 0.844);
+                }
+            }
+
+        }
+    }
+
+
+
+
+}
