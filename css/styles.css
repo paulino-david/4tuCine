@@ -2,6 +2,9 @@
     padding: 0;
     margin: 0;
     color: whitesmoke;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
 }
 
 ::-webkit-scrollbar {
@@ -101,6 +104,7 @@ aside {
                 border-radius: 15px;
                 display: flex;
                 justify-content: center;
+                align-items: center;
                 gap: .3rem;
 
 
@@ -108,8 +112,9 @@ aside {
                     background-color: rgba(69, 69, 69, 0.611);
 
                 }
-                
+
             }
+
             .clicked {
                 background-color: rgba(69, 69, 69, 0.892);
             }
@@ -169,7 +174,7 @@ aside {
         flex-direction: column;
         justify-content: end;
         border-radius: 15px;
-        
+
         .titulo {
             display: flex;
             flex-direction: column;
@@ -188,7 +193,7 @@ aside {
             }
 
             button {
-                width: 8rem;
+                width: 10rem;
                 height: 2rem;
                 background-color: goldenrod;
                 border: none;
@@ -199,6 +204,10 @@ aside {
                 color: black;
                 cursor: pointer;
                 padding: .5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: .5rem;
 
                 i {
                     color: black;
@@ -213,7 +222,7 @@ aside {
         height: 0%;
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: left;
         gap: 2rem;
 
         .tarjeta {
@@ -229,10 +238,10 @@ aside {
             .imagen {
                 height: 15rem;
                 width: 100%;
-                border-radius: 5px;
 
                 img {
                     width: 100%;
+                    border-radius: 5px;
                     height: 100%;
                 }
             }
@@ -242,7 +251,8 @@ aside {
                 box-shadow: -2px 2px 5px black;
                 transition: .2s;
             }
-            .info{
+
+            .info {
                 display: flex;
                 flex-direction: column;
                 justify-content: end;
@@ -253,10 +263,18 @@ aside {
 
             .genPlay {
                 display: flex;
+                flex-direction: column;
                 width: 100%;
                 justify-content: space-between;
+                gap: .5rem;
+
+                button {
+                    background-color: rgba(53, 53, 53, 0.733);
+
+                }
             }
-            button{
+
+            button {
                 background-color: transparent;
                 border: none;
                 outline: none;
@@ -272,7 +290,22 @@ aside {
         }
     }
 
+    .cabezal {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        width: 50%;
+        background-color: rgba(0, 0, 0, 0.111);
+        backdrop-filter: blur(4px);
+        justify-content: center;
+        text-align: center;
+        padding: .5rem;
+        border-radius: 10px;
+        h6{
+            color: rgba(128, 128, 128, 0.737);
+        }
 
-
+    }
 
 }

@@ -387,74 +387,90 @@ generos.map((genero, index) => (
     </option>`)
 )
 
-const mostrarPelis = () => {
-    imdbTop250.map(valor => {
-
-        tarjetas.innerHTML += `
-        <div class="tarjeta">
-
-        <div class="imagen">
-        <img src=${valor.image} alt="">
-        </div>
-            <h3>${valor.title}</h3>
-            <div class="info">
-                <div>
-                    <i class="fa-solid fa-star"></i> ${valor.rating}
-                    <button type="button" id=${valor.rank} class="addFav"><i class="fa-regular fa-heart"></i></button>
-                    <button type="button" class="addFav"><i class="fa-regular fa-clock"></i></button>
-
-                </div>
-
-                <div class="genPlay">
-                    <div>${valor.genres}</div>
-                    <button type="button">
-                        <i class="fa-solid fa-download"></i>
-                    </button>
-                </div>
-            </div>
-
-        </div>`
+const favMark=()=>{
+    const addFav=document.querySelectorAll(".addFav")
+        addFav.forEach(boton => {
+        console.log("si")
+        if (JSON.parse(localStorage.getItem("Favoritos")).includes(Number(boton.id))) {
+            boton.innerHTML = `<i class="fa-solid fa-heart"></i>`
+        }
 
     })
+}
+
+const total_fav=document.getElementById("total_fav")
+
+
+const mostrarPelis = () => {
+    tarjetas.innerHTML = ``
+    if (JSON.parse(localStorage.getItem("Favoritos")).length>1 || JSON.parse(localStorage.getItem("Favoritos")).length==0){
+        total_fav.textContent=`${JSON.parse(localStorage.getItem("Favoritos")).length} favoritos`
+    }
+    else{
+        total_fav.textContent=`${JSON.parse(localStorage.getItem("Favoritos")).length} favorito`
+
+    }
+    imdbTop250.map(valor => {
+
+        if (JSON.parse(localStorage.getItem("Favoritos")).includes(valor.rank)) {
+            tarjetas.innerHTML += `
+            <div class="tarjeta">
+    
+            <div class="imagen">
+            <img src=${valor.image} alt="">
+            </div>
+                <h3>${valor.title}</h3>
+                <div class="info">
+                    <div>
+                        <i class="fa-solid fa-star"></i> ${valor.rating}
+                        <button type="button" id=${valor.rank} class="addFav"><i class="fa-regular fa-heart"></i></button>
+                        <button type="button" class="addFav"><i class="fa-regular fa-clock"></i></button>
+    
+                    </div>
+    
+                    <div class="genPlay">
+                        <div>${valor.genres}</div>
+                        <button type="button">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+    
+            </div>` 
+
+        }
+
+
+    })
+    favMark()
 
     return
 
 }
 
-const Favoritos=()=>{
+const Favoritos = () => {
     const addFav = document.querySelectorAll(".addFav")
     addFav.forEach(boton => {
-        if (JSON.parse(localStorage.getItem("Favoritos")).includes(Number(boton.id))) {
-            boton.innerHTML = `<i class="fa-solid fa-heart"></i>`
-        }
-    
+
         boton.addEventListener("click", (e) => {
             imdbTop250.map(valor => {
-                if (valor.rank == Number(boton.id)) {
+                if (JSON.parse(localStorage.getItem("Favoritos")).includes(Number(boton.id))) {
 
-    
-                    if (!JSON.parse(localStorage.getItem("Favoritos")).includes(Number(boton.id)) || localStorage.getItem("Favoritos").length == 0) {
-                        boton.innerHTML = `<i class="fa-solid fa-heart"></i>`
-                        const listaFav = JSON.parse(localStorage.getItem("Favoritos"))
-                        listaFav.push(Number(boton.id))
-    
-                        localStorage.setItem("Favoritos", JSON.stringify(listaFav))
-                    }
-    
-                    else {
+                    if (JSON.parse(localStorage.getItem("Favoritos")).includes(Number(boton.id)) || localStorage.getItem("Favoritos").length == 0) {
 
-                        const newListaFav = JSON.parse(localStorage.getItem("Favoritos")).filter(item=>item!==Number(boton.id))
+                        const newListaFav = JSON.parse(localStorage.getItem("Favoritos")).filter(item => item !== Number(boton.id))
                         console.log(newListaFav)
                         localStorage.setItem("Favoritos", JSON.stringify(newListaFav))
                         // valor.Favorito = false
-    
+
                         boton.innerHTML = `<i class="fa-regular fa-heart"></i>`
-    
+
                     }
                 }
             })
+            mostrarPelis()
         })
-    
+
     })
 
 }
@@ -463,16 +479,18 @@ mostrarPelis()
 Favoritos()
 
 
+
 generosDOM.addEventListener("click", () => {
     tarjetas.innerHTML = ``
     if (generosDOM.value === "Todas") {
-        portada.style.display = "flex"
+        // portada.style.display = "flex"
         mostrarPelis()
         return Favoritos()
     }
-    portada.style.display = "none"
+    // portada.style.display = "none"
     imdbTop250.map((valor) => {
-        if (valor.genres.includes(generosDOM.value)) {
+        if (valor.genres.includes(generosDOM.value) && JSON.parse(localStorage.getItem("Favoritos")).includes(Number(valor.rank))) {
+
             tarjetas.innerHTML += `
             <div class="tarjeta">
                 <img src=${valor.image} alt="">
@@ -495,27 +513,24 @@ generosDOM.addEventListener("click", () => {
         }
 
     })
+    favMark()
     Favoritos()
 })
 
-imdbTop250.map(valor => {
-    if (valor.title == "GoodFellas") {
-        descripcion.textContent = valor.description
-    }
-})
 
 busqueda.addEventListener("input", () => {
 
     tarjetas.innerHTML = ``
     if (busqueda.value === "") {
-        portada.style.display = "flex"
+        // portada.style.display = "flex"
         console.log("YES")
-        return mostrarPelis()
+mostrarPelis()
+        return Favoritos()
 
     }
-    portada.style.display = "none"
+    // portada.style.display = "none"
     imdbTop250.filter((valor) => {
-        if (valor.title.toLowerCase().includes(busqueda.value.toLowerCase())) {
+        if (valor.title.toLowerCase().includes(busqueda.value.toLowerCase()) && JSON.parse(localStorage.getItem("Favoritos")).includes(Number(valor.rank))) {
 
             tarjetas.innerHTML += `
             <div class="tarjeta">
@@ -539,6 +554,7 @@ busqueda.addEventListener("input", () => {
         }
 
     })
+    favMark()
     Favoritos()
 })
 
