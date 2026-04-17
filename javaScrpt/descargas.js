@@ -1,4 +1,5 @@
 
+
 const generosDOM = document.getElementById("generos")
 const tarjetas = document.getElementById("tarjetas")
 const busqueda = document.getElementById("busqueda")
@@ -373,9 +374,6 @@ const generos = []
 if (!localStorage.getItem("Favoritos")) {
     localStorage.setItem("Favoritos", JSON.stringify([]))
 }
-if (!localStorage.getItem("Downloads")) {
-    localStorage.setItem("Downloads", JSON.stringify([]))
-}
 
 imdbTop250.flatMap(value => value.genres).forEach(genero => {
     if (!generos.includes(genero)) {
@@ -390,37 +388,93 @@ generos.map((genero, index) => (
     </option>`)
 )
 
-const mostrarPelis = () => {
-    imdbTop250.map(valor => {
-
-        tarjetas.innerHTML += `
-        <div class="tarjeta">
-
-        <div class="imagen">
-        <img src=${valor.image} alt="">
-        </div>
-            <h3>${valor.title}</h3>
-            <div class="info">
-                <div>
-                    <i class="fa-solid fa-star"></i> ${valor.rating}
-                    <button type="button" id=${valor.rank} class="addFav"><i class="fa-regular fa-heart"></i></button>
-                    <button type="button" class="addFav"><i class="fa-regular fa-clock"></i></button>
-
-                </div>
-
-                <div class="genPlay">
-                    <div>${valor.genres}</div>
-                    <button type="button" class="addDownload" id=${valor.rank}D>
-                        <i class="fa-solid fa-download"></i>
-                    </button>
-                </div>
-            </div>
-
-        </div>`
+const favMark = () => {
+    const addFav = document.querySelectorAll(".addFav")
+    addFav.forEach(boton => {
+        if (JSON.parse(localStorage.getItem("Favoritos")).includes(Number(boton.id))) {
+            boton.innerHTML = `<i class="fa-solid fa-heart"></i>`
+        }
 
     })
+}
+
+const total_fav = document.getElementById("total_fav")
+
+
+const mostrarPelis = () => {
+    tarjetas.innerHTML = ``
+    if (JSON.parse(localStorage.getItem("Downloads")).length > 1 || JSON.parse(localStorage.getItem("Favoritos")).length == 0) {
+        total_fav.textContent = `${JSON.parse(localStorage.getItem("Downloads")).length} descargas`
+    }
+    else {
+        total_fav.textContent = `${JSON.parse(localStorage.getItem("Downloads")).length} descargas`
+    }
+    imdbTop250.map(valor => {
+
+        if (JSON.parse(localStorage.getItem("Downloads")).includes(valor.rank)) {
+            tarjetas.innerHTML += `
+            <div class="tarjeta">
+    
+            <div class="imagen">
+            <img src=${valor.image} alt="">
+            </div>
+                <h3>${valor.title}</h3>
+                <div class="info">
+                    <div>
+                        <i class="fa-solid fa-star"></i> ${valor.rating}
+                        <button type="button" id=${valor.rank} class="addFav"><i class="fa-regular fa-heart"></i></button>
+                        <button type="button" class="addFav"><i class="fa-regular fa-clock"></i></button>
+    
+                    </div>
+    
+                    <div class="genPlay">
+                        <div>${valor.genres}</div>
+                    <button type="button" class="addDownload" id=${valor.rank}D>
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+    
+            </div>`
+
+        }
+
+
+    })
+    favMark()
 
     return
+
+}
+
+const Descargar = () => {
+    const addDownload = document.querySelectorAll(".addDownload")
+    addDownload.forEach(boton => {
+        if (JSON.parse(localStorage.getItem("Downloads")).includes(Number(boton.id.slice(0,boton.id.length-1)))) {
+            boton.innerHTML = `<i class="fa-solid fa-check"></i>`
+        }
+        boton.addEventListener("click", (e) => {
+            imdbTop250.map(valor => {
+                if (JSON.parse(localStorage.getItem("Downloads")).includes(Number(boton.id.slice(0,boton.id.length-1)))) {
+
+                    if (JSON.parse(localStorage.getItem("Downloads")).includes(Number(boton.id.slice(0,boton.id.length-1))) || localStorage.getItem("Downloads").length == 0) {
+
+                        const newListaFav = JSON.parse(localStorage.getItem("Downloads")).filter(item => item !== Number(boton.id.slice(0,boton.id.length-1)))
+                        localStorage.setItem("Downloads", JSON.stringify(newListaFav))
+                        // valor.Favorito = false
+
+                        boton.innerHTML = `<i class="fa-regular fa-heart"></i>`
+
+                    }
+                }
+            })
+            mostrarPelis()
+            Favoritos()
+
+            Descargar()
+        })
+
+    })
 
 }
 
@@ -462,59 +516,20 @@ const Favoritos = () => {
 
 }
 
-const Descargas = () => {
-    const addDownload = document.querySelectorAll(".addDownload")
-    addDownload.forEach(boton => {
-        if (JSON.parse(localStorage.getItem("Downloads")).includes(Number(boton.id.slice(0,boton.id.length-1)))) {
-            boton.innerHTML = `<i class="fa-solid fa-check"></i>`
-        }
-
-        boton.addEventListener("click", (e) => {
-            imdbTop250.map(valor => {
-                if (valor.rank == Number(boton.id.slice(0,boton.id.length-1))) {
-
-                    if (!JSON.parse(localStorage.getItem("Downloads")).includes(Number(boton.id.slice(0,boton.id.length-1))) || localStorage.getItem("Downloads").length == 0) {
-            boton.innerHTML = `<i class="fa-solid fa-check"></i>`
-                        const listaFav = JSON.parse(localStorage.getItem("Downloads"))
-                        listaFav.push(Number(boton.id.slice(0,boton.id.length-1)))
-
-                        localStorage.setItem("Downloads", JSON.stringify(listaFav))
-                    }
-
-                    else {
-
-                        const newListaFav = JSON.parse(localStorage.getItem("Downloads")).filter(item => item !== Number(boton.id.slice(0,boton.id.length-1)))
-                        console.log(newListaFav)
-                        localStorage.setItem("Downloads", JSON.stringify(newListaFav))
-                        // valor.Favorito = false
-                        boton.innerHTML = `<i class="fa-solid fa-download"></i>`
-
-
-                    }
-                }
-            })
-        })
-
-    })
-
-}
-
-mostrarPelis()
-Favoritos()
-Descargas()
 
 
 generosDOM.addEventListener("click", () => {
     tarjetas.innerHTML = ``
     if (generosDOM.value === "Todas") {
-        portada.style.display = "flex"
+        // portada.style.display = "flex"
         mostrarPelis()
         Favoritos()
-        return Descargas()
+        return Descargar()
     }
-    portada.style.display = "none"
+    // portada.style.display = "none"
     imdbTop250.map((valor) => {
-        if (valor.genres.includes(generosDOM.value)) {
+        if (valor.genres.includes(generosDOM.value) && JSON.parse(localStorage.getItem("Downloads")).includes(Number(valor.rank))) {
+
             tarjetas.innerHTML += `
             <div class="tarjeta">
                 <img src=${valor.image} alt="">
@@ -529,7 +544,7 @@ generosDOM.addEventListener("click", () => {
                 </div>
                 <div class="genPlay">
                     <div>${valor.genres}</div>
-                    <button type="button" class="addDownload" id=${valor.id}D>
+                    <button type="button" class="addDownload" id=${valor.rank}D>
                         <i class="fa-solid fa-download"></i>
                     </button>
                 </div>
@@ -537,28 +552,27 @@ generosDOM.addEventListener("click", () => {
         }
 
     })
+    favMark()
     Favoritos()
-    Descargas()
+
+    Descargar()
 })
 
-imdbTop250.map(valor => {
-    if (valor.title == "GoodFellas") {
-        descripcion.textContent = valor.description
-    }
-})
 
 busqueda.addEventListener("input", () => {
 
     tarjetas.innerHTML = ``
     if (busqueda.value === "") {
-        portada.style.display = "flex"
+        // portada.style.display = "flex"
         console.log("YES")
-        return mostrarPelis()
+        mostrarPelis()
+        Favoritos()
+        return Descargar()
 
     }
-    portada.style.display = "none"
+    // portada.style.display = "none"
     imdbTop250.filter((valor) => {
-        if (valor.title.toLowerCase().includes(busqueda.value.toLowerCase())) {
+        if (valor.title.toLowerCase().includes(busqueda.value.toLowerCase()) && JSON.parse(localStorage.getItem("Downloads")).includes(Number(valor.rank))) {
 
             tarjetas.innerHTML += `
             <div class="tarjeta">
@@ -574,7 +588,7 @@ busqueda.addEventListener("input", () => {
                 </div>
                 <div class="genPlay">
                     <div>${valor.genres}</div>
-                    <button type="button" class="addDownload" id=${valor.id}D>
+                    <button type="button" class="addDownload" id=${valor.rank}D>
                         <i class="fa-solid fa-download"></i>
                     </button>
                 </div>
@@ -582,9 +596,14 @@ busqueda.addEventListener("input", () => {
         }
 
     })
+    favMark()
     Favoritos()
-    Descargas()
-
+    Descargar()
 })
 
 
+mostrarPelis()
+Favoritos()
+Descargar()
+
+// export{Descargar}

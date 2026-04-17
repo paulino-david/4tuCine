@@ -1,4 +1,3 @@
-
 const generosDOM = document.getElementById("generos")
 const tarjetas = document.getElementById("tarjetas")
 const busqueda = document.getElementById("busqueda")
@@ -387,9 +386,9 @@ generos.map((genero, index) => (
     </option>`)
 )
 
-const favMark=()=>{
-    const addFav=document.querySelectorAll(".addFav")
-        addFav.forEach(boton => {
+const favMark = () => {
+    const addFav = document.querySelectorAll(".addFav")
+    addFav.forEach(boton => {
         console.log("si")
         if (JSON.parse(localStorage.getItem("Favoritos")).includes(Number(boton.id))) {
             boton.innerHTML = `<i class="fa-solid fa-heart"></i>`
@@ -398,16 +397,53 @@ const favMark=()=>{
     })
 }
 
-const total_fav=document.getElementById("total_fav")
+const total_fav = document.getElementById("total_fav")
+
+const Descargar = () => {
+    const addDownload = document.querySelectorAll(".addDownload")
+    addDownload.forEach(boton => {
+        if (JSON.parse(localStorage.getItem("Downloads")).includes(Number(boton.id.slice(0,boton.id.length-1)))) {
+            boton.innerHTML = `<i class="fa-solid fa-check"></i>`
+        }
+
+        boton.addEventListener("click", (e) => {
+            imdbTop250.map(valor => {
+                if (valor.rank == Number(boton.id.slice(0,boton.id.length-1))) {
+
+                    if (!JSON.parse(localStorage.getItem("Downloads")).includes(Number(boton.id.slice(0,boton.id.length-1))) || localStorage.getItem("Downloads").length == 0) {
+                        boton.innerHTML = `<i class="fa-solid fa-check"></i>`
+                        const listaFav = JSON.parse(localStorage.getItem("Downloads"))
+                        listaFav.push(Number(boton.id.slice(0,boton.id.length-1)))
+
+                        localStorage.setItem("Downloads", JSON.stringify(listaFav))
+                    }
+
+                    else {
+
+                        const newListaFav = JSON.parse(localStorage.getItem("Downloads")).filter(item => item !== Number(boton.id.slice(0,boton.id.length-1)))
+                        console.log(newListaFav)
+                        localStorage.setItem("Downloads", JSON.stringify(newListaFav))
+                        // valor.Favorito = false
+                        boton.innerHTML = `<i class="fa-solid fa-download"></i>`
+
+
+                    }
+                }
+            })
+        })
+
+    })
+
+}
 
 
 const mostrarPelis = () => {
     tarjetas.innerHTML = ``
-    if (JSON.parse(localStorage.getItem("Favoritos")).length>1 || JSON.parse(localStorage.getItem("Favoritos")).length==0){
-        total_fav.textContent=`${JSON.parse(localStorage.getItem("Favoritos")).length} favoritos`
+    if (JSON.parse(localStorage.getItem("Favoritos")).length > 1 || JSON.parse(localStorage.getItem("Favoritos")).length == 0) {
+        total_fav.textContent = `${JSON.parse(localStorage.getItem("Favoritos")).length} favoritos`
     }
-    else{
-        total_fav.textContent=`${JSON.parse(localStorage.getItem("Favoritos")).length} favorito`
+    else {
+        total_fav.textContent = `${JSON.parse(localStorage.getItem("Favoritos")).length} favorito`
 
     }
     imdbTop250.map(valor => {
@@ -430,13 +466,13 @@ const mostrarPelis = () => {
     
                     <div class="genPlay">
                         <div>${valor.genres}</div>
-                        <button type="button">
+                    <button type="button" class="addDownload" id=${valor.rank}D>
                             <i class="fa-solid fa-download"></i>
                         </button>
                     </div>
                 </div>
     
-            </div>` 
+            </div>`
 
         }
 
@@ -469,14 +505,13 @@ const Favoritos = () => {
                 }
             })
             mostrarPelis()
+            Favoritos()
+            Descargar()
         })
 
     })
 
 }
-
-mostrarPelis()
-Favoritos()
 
 
 
@@ -505,7 +540,7 @@ generosDOM.addEventListener("click", () => {
                 </div>
                 <div class="genPlay">
                     <div>${valor.genres}</div>
-                    <button type="button">
+                    <button type="button" class="addDownload" id=${valor.rank}D>
                         <i class="fa-solid fa-download"></i>
                     </button>
                 </div>
@@ -515,6 +550,7 @@ generosDOM.addEventListener("click", () => {
     })
     favMark()
     Favoritos()
+    Descargar()
 })
 
 
@@ -524,8 +560,9 @@ busqueda.addEventListener("input", () => {
     if (busqueda.value === "") {
         // portada.style.display = "flex"
         console.log("YES")
-mostrarPelis()
-        return Favoritos()
+        mostrarPelis()
+        Favoritos()
+        return Descargar()
 
     }
     // portada.style.display = "none"
@@ -546,7 +583,7 @@ mostrarPelis()
                 </div>
                 <div class="genPlay">
                     <div>${valor.genres}</div>
-                    <button type="button">
+                    <button type="button" class="addDownload" id=${valor.rank}D>
                         <i class="fa-solid fa-download"></i>
                     </button>
                 </div>
@@ -556,8 +593,10 @@ mostrarPelis()
     })
     favMark()
     Favoritos()
+    Descargar()
 })
 
 
-
-
+mostrarPelis()
+Favoritos()
+Descargar()
